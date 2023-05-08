@@ -12,6 +12,11 @@ from utils.parsing_data import parse_real_time, parse_astro, parse_air_quality
 router = Router()
 
 
+@router.message(Command(commands=["start"]), StateFilter(default_state))
+async def start_command(message: Message):
+    await message.answer(text=LEXICON_BOTH['start'])
+
+
 @router.message(Command(commands=['realtime']), StateFilter(default_state))
 async def realtime_command(message: Message):
     """

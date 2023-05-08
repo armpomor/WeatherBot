@@ -30,3 +30,15 @@ In this case, only PostgreSQL and Adminer will work in containers
 - `vi config/your_location.py`    LOCALE = 'your coordinates'
 - `docker compose -f docker-compose.yml build`
 - `docker compose -f docker-compose.yml up -d`
+
+## Pushing Updates
+To deploy updates, follow these steps:
+- Push the changes to GitHub.
+- SSH to the server.
+- Pull the changes using git pull.
+- Run the following commands:
+
+- `docker-compose -f docker-compose-deploy.yml build bot`
+- `docker-compose -f docker-compose-deploy.yml up --no-deps -d bot`
+
+This will rebuild the app container and load it without stopping the database or Adminer.
