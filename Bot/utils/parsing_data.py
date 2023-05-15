@@ -157,7 +157,10 @@ def get_weather() -> dict:
 
 
 if __name__ == '__main__':
-    for key, value in parse_real_time().items():
+    # for key, value in parse_real_time().items():
+    #     print(key, ':', value)
+
+    for key, value in parse_air_quality('69.408, 30.207').items():
         print(key, ':', value)
 
 

@@ -2,6 +2,8 @@ import json
 from datetime import datetime, timedelta
 from urllib.request import urlopen
 
+from config.air_gases import GASES
+
 
 def get_ip_data() -> dict:
     """
@@ -39,6 +41,17 @@ def calculation_day_long(time_1: str, time_2: str) -> str:
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
     return f'{hours} hours {minutes} minutes'
+
+
+def set_color_air(n: float, gas: str) -> str:
+    """
+        Возвращает цвет плашки.
+        Принимает значение и название газа,
+        которое является ключом в словаре GASES.
+        """
+    x = [p for p in GASES[gas] if n in p]
+
+    return GASES[gas][x[0]]
 
 
 if __name__ == '__main__':

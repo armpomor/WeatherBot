@@ -3,11 +3,15 @@ from aiogram.filters import Command, StateFilter
 from aiogram.fsm.state import default_state
 from aiogram.types import Message
 
+from prettytable import PrettyTable
+
+from config.air_gases import CIRCLE_COLOR
 from database.postgresessions import session_number_rows, session_get_coordinates, session_get_language
 from handlers.state_settings_handlers import engine
 from lexicon.lexicon import LEXICON_BOTH
 from lexicon.symbols_weather import SYMBOLS
 from utils.parsing_data import parse_real_time, parse_astro, parse_air_quality
+from utils.utilities import set_color_air
 
 router = Router()
 
@@ -66,13 +70,21 @@ async def air_quality_command(message: Message):
 
     if session_number_rows(engine, user_id) and session_get_coordinates(engine, user_id) is not None:
         air = parse_air_quality(session_get_coordinates(engine, user_id))
-        await message.answer(text=f'Содержание \ Content:\n'
-                                  f' CO = {air["CO"]} μg/m\u00B3\n'
-                                  f'NO\u00B2 = {air["NO2"]} μg/m\u00B3\n'
-                                  f'O\u00B3 = {air["O3"]} μg/m\u00B3\n'
-                                  f'SO\u00B2 = {air["SO2"]} μg/m\u00B3\n'
-                                  f'pm 2.5 = {air["pm2_5"]} μg/m\u00B3\n'
-                                  f'pm 10 = {air["pm10"]} μg/m\u00B3')
+
+        # Forming a table for the message
+        table = PrettyTable(header=False, align="l", border=False, padding_width=3)
+
+        table.add_row(['CO', f'  {air["CO"]}', 'μg/m\u00B3', f'{CIRCLE_COLOR[set_color_air(air["CO"], "CO")]}'])
+        table.add_row(['NO\u00B2', f' {air["NO2"]}', '  μg/m\u00B3', f'  {CIRCLE_COLOR[set_color_air(air["NO2"], "NO2")]}'])
+        table.add_row(['O\u00B3', f'  {air["O3"]}', '   μg/m\u00B3', f'   {CIRCLE_COLOR[set_color_air(air["O3"], "O3")]}'])
+        table.add_row(['SO\u00B2', f'  {air["SO2"]}', '   μg/m\u00B3', f'   {CIRCLE_COLOR[set_color_air(air["SO2"], "SO2")]}'])
+        table.add_row(['pm 2.5', f'{air["pm2_5"]}', 'μg/m\u00B3', f'{CIRCLE_COLOR[set_color_air(air["pm2_5"], "pm2_5")]}'])
+        table.add_row(['pm 10', f'{air["pm10"]}', 'μg/m\u00B3', f'{CIRCLE_COLOR[set_color_air(air["pm10"], "pm10")]}'])
+
+        await message.answer(text=f'Good {CIRCLE_COLOR["green"]}{CIRCLE_COLOR["yellow"]}{CIRCLE_COLOR["orange"]}'
+                                  f'{CIRCLE_COLOR["brown"]}{CIRCLE_COLOR["purple"]}{CIRCLE_COLOR["red"]} Bad\n\n'
+                                  f'{table}',
+                             parse_mode='HTML')
     else:
         await message.answer(
             text=LEXICON_BOTH['error'])
