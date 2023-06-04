@@ -1,5 +1,7 @@
 # WeatherBot
 
+[t.me/weather100500bot](https://t.me/weather100500bot)
+
 Multilingual weather telegram-bot with PostgreSQL, SQLAlchemy and Docker.
 
 ## Features

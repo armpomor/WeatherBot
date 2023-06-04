@@ -1,13 +1,13 @@
 """
-Диапазоны концентрации газов в воздухе.
-Зеленый - отлично AQI = 0-50
-Желтый -  умеренно AQI = 51-100
-Оранжевый - нездоровый AQI = 101-150
-Коричневый - плохо AQI = 151-200
-Фиолетовый - очень плохо AQI = 201-300
-Красный - опасно AQI = >300
-В словаре они увеличены в 10 раз,
-т.к. потом делятся на 10, чтобы сделать list[float]
+Ranges of gas concentrations in air.
+Green - excellent AQI = 0-50
+Yellow - moderate AQI = 51-100
+Orange - unhealthy AQI = 101-150
+Brown - bad AQI = 151-200
+Purple - very bad AQI = 201-300
+Red - dangerous AQI = >300
+In the dictionary they are increased by 10 times,
+because then divide by 10 to make list[float]
 https://www.pranaair.com/blog/what-is-air-quality-index-aqi-and-its-calculation/
 """
 
@@ -50,7 +50,7 @@ GASES = {
              tuple([x / 10 for x in range(4240, 6040)]): 'red'}
 }
 
-# Цветные плашки
+# Colored plates
 CIRCLE_COLOR = {'green': '&#128994;',
                 'yellow': '&#128993;',
                 'orange': '&#128992;',
