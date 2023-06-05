@@ -40,7 +40,7 @@ To deploy updates, follow these steps:
 - Pull the changes using git pull.
 - Run the following commands:
 
-- `docker-compose -f docker-compose-deploy.yml build bot`
-- `docker-compose -f docker-compose-deploy.yml up --no-deps -d bot`
+- `docker-compose -f docker-compose.yml build bot`
+- `docker-compose -f docker-compose.yml up --no-deps -d bot`
 
 This will rebuild the app container and load it without stopping the database or Adminer.
